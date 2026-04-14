@@ -878,17 +878,16 @@
         <!-- Положи файл в video/birthday.mp4 или поменяй src ниже -->
         <div class="birthday-finish__video-bg" aria-hidden="true">
           <video id="birthdayVideoBg" preload="metadata" playsinline muted>
-            <source src="IMG_0285.mov--online-audio-convert.com.mp4" type="video/mp4" />
+            <source src="IMG_0285.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="birthday-finish__video-fg">
-          <video id="birthdayVideo" preload="metadata" playsinline controls>
-            <source src="IMG_0285.mov--online-audio-convert.com.mp4" type="video/mp4" />
+          <video id="birthdayVideo" preload="metadata" playsinline>
+            <source src="IMG_0285.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
       <p id="birthdayFinishTitle" class="birthday-finish__title">С днём рождения, любимая!</p>
-      <p class="birthday-finish__hint">Если звук не появился — нажми ▶ на видео</p>
       <button type="button" class="birthday-finish__close" id="birthdayFinishClose">Закрыть</button>
     </div>
   </div>
@@ -1161,15 +1160,14 @@
             /* Как в проекте “др папы”: пытаемся запустить со звуком, если браузер блокнет — пользователь нажмёт ▶ */
             video.muted = false;
             video.volume = 1;
+            video.controls = false;
             var p = video.play();
             if (p && typeof p.then === "function") {
               p.catch(function () {
-                /* если автоплей не разрешён — пользователь нажмёт play сам */
-                video.controls = true;
+                /* автозапуск может быть запрещён на телефонах */
               });
             }
           } catch (e) {
-            video.controls = true;
           }
         }
 
