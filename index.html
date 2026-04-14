@@ -1130,8 +1130,8 @@
         finish.classList.remove("hidden");
         finish.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
-        if (bgMusic && !bgMusic.paused) {
-          prevMusicVolume = bgMusic.volume;
+        if (bgMusic) {
+          if (prevMusicVolume === null) prevMusicVolume = bgMusic.volume;
           bgMusic.volume = Math.max(0, Math.min(1, prevMusicVolume * 0.25));
         }
         startFireworks();
@@ -1139,6 +1139,8 @@
         if (video) {
           try {
             video.currentTime = 0;
+            video.muted = false;
+            video.volume = 1;
             var p = video.play();
             if (p && typeof p.then === "function") {
               p.catch(function () {
