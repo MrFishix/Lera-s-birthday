@@ -739,26 +739,6 @@
       font-weight: 700;
     }
 
-    .birthday-finish__unmute {
-      font-family: inherit;
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: #fff;
-      background: linear-gradient(135deg, #d97a8f 0%, var(--accent) 100%);
-      border: none;
-      padding: 0.7rem 1.25rem;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 10px 26px rgba(217, 122, 143, 0.35);
-      margin: 0.2rem auto 1rem;
-      display: none;
-    }
-
-    .birthday-finish__unmute.is-visible {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
 
     @media (prefers-reduced-motion: reduce) {
       #fireworksCanvas {
@@ -909,9 +889,6 @@
       </div>
       <p id="birthdayFinishTitle" class="birthday-finish__title">С днём рождения, любимая!</p>
       <p class="birthday-finish__hint">Если звук не появился — нажми ▶ на видео</p>
-      <button type="button" class="birthday-finish__unmute" id="birthdayVideoUnmute">
-        <span aria-hidden="true">🔊</span> Включить звук
-      </button>
       <button type="button" class="birthday-finish__close" id="birthdayFinishClose">Закрыть</button>
     </div>
   </div>
@@ -1041,7 +1018,6 @@
       var btnOpen = document.getElementById("birthdayFinishOpen");
       var video = document.getElementById("birthdayVideo");
       var videoBg = document.getElementById("birthdayVideoBg");
-      var btnUnmute = document.getElementById("birthdayVideoUnmute");
       var bgMusic = document.getElementById("bgMusic");
       if (!finish || !canvas || !btnClose || !btnOpen) return;
 
@@ -1182,8 +1158,8 @@
         if (video) {
           try {
             video.currentTime = 0;
-            /* На телефонах безопаснее стартовать muted, а звук включать отдельным тапом */
-            video.muted = true;
+            /* Как в проекте “др папы”: пытаемся запустить со звуком, если браузер блокнет — пользователь нажмёт ▶ */
+            video.muted = false;
             video.volume = 1;
             var p = video.play();
             if (p && typeof p.then === "function") {
@@ -1206,9 +1182,6 @@
           } catch (e) {}
         }
 
-        if (btnUnmute) {
-          btnUnmute.classList.add("is-visible");
-        }
       }
 
       function closeFinish() {
@@ -1223,7 +1196,6 @@
           try { videoBg.pause(); } catch (e) {}
         }
         unduckBackgroundMusic();
-        if (btnUnmute) btnUnmute.classList.remove("is-visible");
       }
 
       btnClose.addEventListener("click", closeFinish);
@@ -1232,7 +1204,6 @@
       if (video) {
         video.addEventListener("playing", function () {
           duckBackgroundMusic();
-          if (btnUnmute) btnUnmute.classList.add("is-visible");
         });
         video.addEventListener("pause", function () {
           if (finish.classList.contains("hidden")) return;
@@ -1240,19 +1211,6 @@
         });
         video.addEventListener("ended", function () {
           unduckBackgroundMusic();
-        });
-      }
-
-      if (btnUnmute && video) {
-        btnUnmute.addEventListener("click", function () {
-          try {
-            video.muted = false;
-            video.volume = 1;
-            var p2 = video.play();
-            if (p2 && typeof p2.then === "function") p2.catch(function () {});
-            duckBackgroundMusic();
-            btnUnmute.classList.remove("is-visible");
-          } catch (e) {}
         });
       }
 
