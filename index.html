@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #faf6f2;
@@ -234,6 +235,24 @@
       color: var(--text);
     }
 
+    .h2-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .h2-note {
+      font-family: "Nunito", system-ui, sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-soft);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      opacity: 0.9;
+    }
+
     section.block p + p {
       margin-top: 0.85rem;
     }
@@ -267,6 +286,150 @@
       color: var(--text-soft);
     }
 
+    .certificate {
+      position: relative;
+      overflow: hidden;
+      padding: 1.85rem 1.5rem;
+      background: linear-gradient(165deg, rgba(255, 252, 250, 1) 0%, rgba(243, 235, 228, 1) 100%);
+    }
+
+    .certificate::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 18px;
+      border: 1px dashed rgba(184, 149, 140, 0.55);
+      pointer-events: none;
+    }
+
+    .certificate::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(120px 90px at 15% 20%, rgba(201, 168, 154, 0.18), transparent 70%),
+        radial-gradient(140px 110px at 88% 28%, rgba(201, 168, 154, 0.14), transparent 72%),
+        radial-gradient(160px 130px at 40% 92%, rgba(201, 168, 154, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .certificate__badge {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .certificate__title {
+      position: relative;
+      z-index: 1;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.55rem, 5vw, 2.15rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin: 0 0 0.75rem;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .certificate__to {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: var(--text-soft);
+      font-weight: 700;
+      margin: 0.25rem 0 0.65rem;
+    }
+
+    .certificate__name {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0 0 0.95rem;
+    }
+
+    .certificate__text {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: var(--text);
+      max-width: 34em;
+      margin: 0 auto;
+    }
+
+    .certificate__foot {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      align-items: start;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .certificate__line {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border-top: 1px solid rgba(201, 168, 154, 0.6);
+      padding-top: 0.35rem;
+      min-height: 3.25rem;
+    }
+
+    .certificate__value {
+      display: block;
+      margin-top: 0.25rem;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .certificate__signature {
+      font-family: "Great Vibes", "Cormorant Garamond", cursive;
+      font-size: clamp(1.35rem, 6vw, 1.9rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: rgba(92, 74, 66, 0.9);
+      transform: rotate(-2deg);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .certificate__actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      margin-top: 1.1rem;
+    }
+
+    .certificate__download {
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--nude-deep) 100%);
+      border: none;
+      padding: 0.75rem 1.35rem;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(184, 149, 140, 0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .certificate__download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(184, 149, 140, 0.5);
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -296,6 +459,9 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      /* Более мягкое масштабирование без “пиксельности” */
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     .photo-card__caption {
@@ -430,11 +596,29 @@
       opacity: 0.75;
     }
 
-    .birthday-scroll-sentinel {
-      height: 2px;
-      width: 100%;
-      pointer-events: none;
-      margin: 0;
+    .birthday-trigger {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+
+    .birthday-trigger__btn {
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--nude-deep) 100%);
+      border: none;
+      padding: 0.9rem 1.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(184, 149, 140, 0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .birthday-trigger__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(184, 149, 140, 0.52);
     }
 
     .birthday-finish {
@@ -470,14 +654,15 @@
     .birthday-finish__card {
       position: relative;
       z-index: 2;
-      max-width: 22rem;
-      width: 100%;
+      width: min(92vw, 720px);
+      max-height: min(86vh, 740px);
       text-align: center;
       padding: 2rem 1.5rem;
       background: linear-gradient(165deg, var(--card) 0%, var(--bg-soft) 100%);
       border-radius: 24px;
       box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(201, 168, 154, 0.35);
+      overflow: auto;
     }
 
     .birthday-finish__title {
@@ -487,6 +672,46 @@
       color: var(--text);
       line-height: 1.3;
       margin: 0 0 1.25rem;
+    }
+
+    .birthday-finish__video {
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      background: transparent;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(201, 168, 154, 0.35);
+      margin-bottom: 1.1rem;
+      position: relative;
+    }
+
+    .birthday-finish__video-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      transform: scale(1.12);
+      filter: blur(18px) saturate(1.15);
+      opacity: 0.9;
+    }
+
+    .birthday-finish__video-bg video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .birthday-finish__video-fg {
+      position: relative;
+      z-index: 1;
+    }
+
+    .birthday-finish__video video {
+      width: 100%;
+      height: min(52vh, 420px);
+      display: block;
+      object-fit: contain;
+      background: transparent;
     }
 
     .birthday-finish__close {
@@ -575,8 +800,32 @@
       <p class="letter-signature">Твой муж Валера</p>
     </section>
 
+    <section class="block certificate" id="certificate" aria-label="Сертификат">
+      <p class="certificate__badge">Сертификат</p>
+      <h2 class="certificate__title">Для самой лучшей жены в галактике</h2>
+      <p class="certificate__to">Вручается</p>
+      <p class="certificate__name">Варянице Валерии Евгеньевне</p>
+      <p class="certificate__text">
+        За бесконечную нежность, красоту души и умение делать мир вокруг теплее. За любовь, которая вдохновляет. За «мы», которое хочется беречь каждый день.
+      </p>
+      <div class="certificate__foot" aria-hidden="true">
+        <div class="certificate__line">
+          Дата
+          <span class="certificate__value">09.09.2023</span>
+        </div>
+        <div class="certificate__line" style="text-align:right;">
+          Подпись
+          <span class="certificate__value certificate__signature">MrFish</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="certificate__actions" data-html2canvas-ignore="true">
+      <button type="button" class="certificate__download" id="downloadCertificateBtn">Скачать сертификат (JPG)</button>
+    </div>
+
     <section class="block">
-      <h2>Наши моменты</h2>
+      <h2 class="h2-row"><span>Наши моменты</span><span class="h2-note">тапни по картинке</span></h2>
       <div class="gallery">
         <div class="photo-card">
           <img src="img/9679051a-e56c-4936-9598-eea26bb6d996.JPG" alt="Воспоминание 1" width="400" height="400" />
@@ -608,12 +857,27 @@
     <footer class="site-footer">
       <p>С любовью, Валера <span class="heart" aria-hidden="true">♥</span></p>
     </footer>
-    <div id="birthday-scroll-sentinel" class="birthday-scroll-sentinel" aria-hidden="true"></div>
+    <div class="birthday-trigger">
+      <button type="button" class="birthday-trigger__btn" id="birthdayFinishOpen">Открыть финальное поздравление</button>
+    </div>
   </div>
 
   <div id="birthdayFinish" class="birthday-finish hidden" role="dialog" aria-modal="true" aria-labelledby="birthdayFinishTitle" aria-hidden="true">
     <canvas id="fireworksCanvas" aria-hidden="true"></canvas>
     <div class="birthday-finish__card">
+      <div class="birthday-finish__video">
+        <!-- Положи файл в video/birthday.mp4 или поменяй src ниже -->
+        <div class="birthday-finish__video-bg" aria-hidden="true">
+          <video id="birthdayVideoBg" preload="metadata" playsinline muted>
+            <source src="IMG_0285.mov--online-audio-convert.com.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="birthday-finish__video-fg">
+          <video id="birthdayVideo" preload="metadata" playsinline>
+            <source src="IMG_0285.mov--online-audio-convert.com.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
       <p id="birthdayFinishTitle" class="birthday-finish__title">С днём рождения, любимая!</p>
       <button type="button" class="birthday-finish__close" id="birthdayFinishClose">Закрыть</button>
     </div>
@@ -644,6 +908,7 @@
     <span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     (function () {
       var audio = document.getElementById("bgMusic");
@@ -740,8 +1005,11 @@
       var finish = document.getElementById("birthdayFinish");
       var canvas = document.getElementById("fireworksCanvas");
       var btnClose = document.getElementById("birthdayFinishClose");
-      var sentinel = document.getElementById("birthday-scroll-sentinel");
-      if (!finish || !canvas || !btnClose || !sentinel) return;
+      var btnOpen = document.getElementById("birthdayFinishOpen");
+      var video = document.getElementById("birthdayVideo");
+      var videoBg = document.getElementById("birthdayVideoBg");
+      var bgMusic = document.getElementById("bgMusic");
+      if (!finish || !canvas || !btnClose || !btnOpen) return;
 
       var ctx = canvas.getContext("2d");
       var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -749,7 +1017,7 @@
       var rafId = 0;
       var particles = [];
       var rockets = [];
-      var shownOnce = false;
+      var prevMusicVolume = null;
 
       function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -858,13 +1126,39 @@
       });
 
       function openFinish() {
-        if (shownOnce) return;
-        shownOnce = true;
-        io.unobserve(sentinel);
+        if (!finish.classList.contains("hidden")) return;
         finish.classList.remove("hidden");
         finish.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
+        if (bgMusic && !bgMusic.paused) {
+          prevMusicVolume = bgMusic.volume;
+          bgMusic.volume = Math.max(0, Math.min(1, prevMusicVolume * 0.25));
+        }
         startFireworks();
+
+        if (video) {
+          try {
+            video.currentTime = 0;
+            var p = video.play();
+            if (p && typeof p.then === "function") {
+              p.catch(function () {
+                /* если автоплей не разрешён — пользователь нажмёт play сам */
+                video.controls = true;
+              });
+            }
+          } catch (e) {
+            video.controls = true;
+          }
+        }
+
+        if (videoBg) {
+          try {
+            videoBg.currentTime = 0;
+            videoBg.muted = true;
+            var pb = videoBg.play();
+            if (pb && typeof pb.then === "function") pb.catch(function () {});
+          } catch (e) {}
+        }
       }
 
       function closeFinish() {
@@ -872,23 +1166,71 @@
         finish.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "";
         stopFireworks();
+        if (video) {
+          try { video.pause(); } catch (e) {}
+        }
+        if (videoBg) {
+          try { videoBg.pause(); } catch (e) {}
+        }
+        if (bgMusic && prevMusicVolume !== null) {
+          bgMusic.volume = prevMusicVolume;
+          prevMusicVolume = null;
+        }
       }
 
       btnClose.addEventListener("click", closeFinish);
+      btnOpen.addEventListener("click", openFinish);
 
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" && !finish.classList.contains("hidden")) closeFinish();
       });
 
-      var io = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting && entry.intersectionRatio > 0) openFinish();
+    })();
+
+    (function () {
+      var btn = document.getElementById("downloadCertificateBtn");
+      var cert = document.getElementById("certificate");
+      if (!btn || !cert) return;
+
+      function downloadDataUrl(dataUrl, filename) {
+        var a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      btn.addEventListener("click", async function () {
+        if (!window.html2canvas) {
+          alert("Чтобы скачать сертификат, нужна загрузка библиотеки html2canvas (интернет).");
+          return;
+        }
+
+        btn.disabled = true;
+        var oldText = btn.textContent;
+        btn.textContent = "Готовлю JPG…";
+
+        try {
+          if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+          }
+
+          var canvas = await window.html2canvas(cert, {
+            backgroundColor: "#fffcfa",
+            scale: Math.min(2, window.devicePixelRatio || 1),
+            useCORS: true,
           });
-        },
-        { root: null, rootMargin: "0px 0px 0px 0px", threshold: 0.01 }
-      );
-      io.observe(sentinel);
+
+          var jpg = canvas.toDataURL("image/jpeg", 0.92);
+          downloadDataUrl(jpg, "certificate.jpg");
+        } catch (e) {
+          alert("Не получилось скачать сертификат: " + (e && e.message ? e.message : e));
+        } finally {
+          btn.disabled = false;
+          btn.textContent = oldText;
+        }
+      });
     })();
   </script>
 </body>
