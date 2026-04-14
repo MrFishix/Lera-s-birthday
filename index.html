@@ -739,6 +739,27 @@
       font-weight: 700;
     }
 
+    .birthday-finish__unmute {
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #d97a8f 0%, var(--accent) 100%);
+      border: none;
+      padding: 0.7rem 1.25rem;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(217, 122, 143, 0.35);
+      margin: 0.2rem auto 1rem;
+      display: none;
+    }
+
+    .birthday-finish__unmute.is-visible {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       #fireworksCanvas {
         display: none;
@@ -888,6 +909,9 @@
       </div>
       <p id="birthdayFinishTitle" class="birthday-finish__title">С днём рождения, любимая!</p>
       <p class="birthday-finish__hint">Если звук не появился — нажми ▶ на видео</p>
+      <button type="button" class="birthday-finish__unmute" id="birthdayVideoUnmute">
+        <span aria-hidden="true">🔊</span> Включить звук
+      </button>
       <button type="button" class="birthday-finish__close" id="birthdayFinishClose">Закрыть</button>
     </div>
   </div>
@@ -1017,6 +1041,7 @@
       var btnOpen = document.getElementById("birthdayFinishOpen");
       var video = document.getElementById("birthdayVideo");
       var videoBg = document.getElementById("birthdayVideoBg");
+      var btnUnmute = document.getElementById("birthdayVideoUnmute");
       var bgMusic = document.getElementById("bgMusic");
       if (!finish || !canvas || !btnClose || !btnOpen) return;
 
@@ -1027,6 +1052,19 @@
       var particles = [];
       var rockets = [];
       var prevMusicVolume = null;
+
+      function duckBackgroundMusic() {
+        if (!bgMusic || bgMusic.paused) return;
+        if (prevMusicVolume !== null) return;
+        prevMusicVolume = bgMusic.volume;
+        bgMusic.volume = Math.max(0, Math.min(1, prevMusicVolume * 0.25));
+      }
+
+      function unduckBackgroundMusic() {
+        if (!bgMusic || prevMusicVolume === null) return;
+        bgMusic.volume = prevMusicVolume;
+        prevMusicVolume = null;
+      }
 
       function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -1139,16 +1177,13 @@
         finish.classList.remove("hidden");
         finish.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
-        if (bgMusic) {
-          if (prevMusicVolume === null) prevMusicVolume = bgMusic.volume;
-          bgMusic.volume = Math.max(0, Math.min(1, prevMusicVolume * 0.25));
-        }
         startFireworks();
 
         if (video) {
           try {
             video.currentTime = 0;
-            video.muted = false;
+            /* На телефонах безопаснее стартовать muted, а звук включать отдельным тапом */
+            video.muted = true;
             video.volume = 1;
             var p = video.play();
             if (p && typeof p.then === "function") {
@@ -1170,6 +1205,10 @@
             if (pb && typeof pb.then === "function") pb.catch(function () {});
           } catch (e) {}
         }
+
+        if (btnUnmute) {
+          btnUnmute.classList.add("is-visible");
+        }
       }
 
       function closeFinish() {
@@ -1183,14 +1222,39 @@
         if (videoBg) {
           try { videoBg.pause(); } catch (e) {}
         }
-        if (bgMusic && prevMusicVolume !== null) {
-          bgMusic.volume = prevMusicVolume;
-          prevMusicVolume = null;
-        }
+        unduckBackgroundMusic();
+        if (btnUnmute) btnUnmute.classList.remove("is-visible");
       }
 
       btnClose.addEventListener("click", closeFinish);
       btnOpen.addEventListener("click", openFinish);
+
+      if (video) {
+        video.addEventListener("playing", function () {
+          duckBackgroundMusic();
+          if (btnUnmute) btnUnmute.classList.add("is-visible");
+        });
+        video.addEventListener("pause", function () {
+          if (finish.classList.contains("hidden")) return;
+          unduckBackgroundMusic();
+        });
+        video.addEventListener("ended", function () {
+          unduckBackgroundMusic();
+        });
+      }
+
+      if (btnUnmute && video) {
+        btnUnmute.addEventListener("click", function () {
+          try {
+            video.muted = false;
+            video.volume = 1;
+            var p2 = video.play();
+            if (p2 && typeof p2.then === "function") p2.catch(function () {});
+            duckBackgroundMusic();
+            btnUnmute.classList.remove("is-visible");
+          } catch (e) {}
+        });
+      }
 
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" && !finish.classList.contains("hidden")) closeFinish();
